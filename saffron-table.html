@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- demo -->
+<title>Saffron Table</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500..700&family=Jost:wght@400..600&display=swap">
+<style>
+/* Split hero with opening-hours card, signature dish grid, tabbed menu, reservation form. */
+
+:root{--bg:#F7F4F2;--surface:#FEFEFD;--fg:#261A12;--muted:#69594F;--line:#E2DAD4;--accent:#A23B12;--accent-fg:#FFFFFF;--warn:#9A5B00;--ok:#0B7A52;--bad:#B3261E;--fd:'Cormorant Garamond',Georgia,serif;--fb:'Jost',system-ui,sans-serif;--mono:ui-monospace,Menlo,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1B130E;--surface:#291E17;--fg:#F0EAE6;--muted:#BCB1A9;--line:#40332B;--accent:#F0A074;--accent-fg:#1B130E;--warn:#F0B35A;--ok:#4FD6A0;--bad:#FF9A90;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1B130E;--surface:#291E17;--fg:#F0EAE6;--muted:#BCB1A9;--line:#40332B;--accent:#F0A074;--accent-fg:#1B130E;--warn:#F0B35A;--ok:#4FD6A0;--bad:#FF9A90;color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:var(--fb);font-size:16px;line-height:1.6;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+.wrap{max-width:1080px;margin:0 auto}
+h1,h2,h3{font-family:var(--fd);line-height:1.1;margin:0;text-wrap:balance;letter-spacing:-.01em}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.demo{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 16px;padding-block:10px;font-size:13px;color:var(--muted);border-bottom:1px solid var(--line)}
+.demo a{color:var(--accent);font-weight:600;text-decoration:none}
+.brandbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 20px;padding-block:16px}
+.brand{font-family:var(--fd);font-weight:700;font-size:22px;text-decoration:none}
+.brandbar nav{display:flex;gap:4px;flex-wrap:wrap}
+.brandbar nav a{padding:6px 10px;font-size:14px;color:var(--muted);text-decoration:none;border-radius:8px}
+.brandbar nav a:hover{color:var(--fg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 20px;border-radius:10px;font:600 15px var(--fb);text-decoration:none;border:1px solid var(--fg);background:transparent;color:var(--fg);cursor:pointer}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-fg)}
+.btn.small{padding:7px 12px;font-size:13px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+section{padding-block:60px;border-top:1px solid var(--line)}
+.head{display:grid;gap:12px;margin-bottom:32px;max-width:60ch}
+.head h2{font-size:clamp(28px,4vw,42px)}
+.head p{color:var(--muted)}
+form{display:grid;gap:14px}
+label{display:grid;gap:6px;font-size:13px;font-weight:600}
+input,select,textarea{font:inherit;font-weight:400;color:var(--fg);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px;width:100%}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.err{color:var(--bad);font-size:14px;min-height:1.2em}
+.ok{padding:16px;border-radius:12px;border:1px solid var(--ok);color:var(--fg);background:var(--bg)}
+.ok b{color:var(--ok)}
+footer{border-top:1px solid var(--line);padding-block:28px 36px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;color:var(--muted);font-size:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{font:500 14px var(--fb);padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.chip[aria-pressed="true"],.chip[aria-selected="true"]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+@media(max-width:900px){.two{grid-template-columns:1fr}}
+@media(max-width:600px){section{padding-block:44px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+
+
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:44px;align-items:center;padding-block:56px 64px}
+.hero>*{min-width:0}
+.hero h1{font-size:clamp(36px,5.6vw,66px);margin-block:14px 18px}
+.hero .lead{font-size:18px;color:var(--muted);max-width:50ch}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.info{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;display:grid;gap:14px}
+.info h3{font-size:20px}
+.info dl{margin:0;display:grid;gap:10px}
+.info dl div{display:flex;justify-content:space-between;gap:16px;border-bottom:1px solid var(--line);padding-bottom:10px;font-size:15px}
+.info dl div:last-child{border:0;padding:0}
+.info dt{color:var(--muted)}
+.info dd{margin:0;font-weight:600;text-align:right}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.grid3>div{background:var(--surface);padding:24px;display:grid;gap:8px;align-content:start;min-width:0}
+.grid3 h3{font-size:19px}
+.grid3 p{color:var(--muted);font-size:15px}
+.grid3 .price{font-family:var(--mono);font-size:13px;color:var(--accent)}
+.people{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.person{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;display:grid;gap:8px;min-width:0}
+.avatar{width:56px;height:56px;border-radius:50%;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;font:700 20px var(--fd)}
+.person p{color:var(--muted);font-size:14.5px}
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.menu{display:grid;gap:0;max-width:760px}
+.menu .item{display:grid;grid-template-columns:1fr auto;gap:4px 20px;padding:16px 0;border-bottom:1px solid var(--line)}
+.menu .item h3{font-size:20px}
+.menu .item p{grid-column:1;color:var(--muted);font-size:15px}
+.menu .price{font-family:var(--mono);font-size:15px;grid-row:1;grid-column:2}
+.book{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:start}
+.book>*{min-width:0}
+.book form{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px}
+@media(max-width:900px){.hero,.book{grid-template-columns:1fr;gap:32px}.grid3,.people{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid3,.people{grid-template-columns:1fr}.hero{padding-block:36px 44px}}
+
+</style>
+<style>html{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<div class="wrap demo"><span>Demo project by BytePulseDev. All names and data are made up.</span><a href="index.html" target="_blank" rel="noopener">BytePulseDev portfolio ↗</a></div>
+<div class="wrap brandbar"><a class="brand" href="#top">Saffron Table</a><nav><a href="#services">Signatures</a><a href="#menu">Menu</a><a href="#book">Reserve</a></nav></div>
+<main class="wrap" id="top"><div class="hero"><div><p class="eyebrow">Karachi-style kitchen</p><h1>Slow-cooked dishes, fresh bread, a full table.</h1><p class="lead">Family recipes cooked over low heat and served the same evening. Reserve a table for dinner or a weekend lunch.</p><div class="cta"><a class="btn primary" href="#book">Reserve a table</a><a class="btn" href="#menu">View the menu</a></div></div><aside class="info"><h3>Opening hours</h3><dl><div><dt>Lunch (Sat, Sun)</dt><dd>12:30 to 15:30</dd></div><div><dt>Dinner (daily)</dt><dd>19:00 to 23:30</dd></div><div><dt>Closed</dt><dd>Monday lunch</dd></div><div><dt>Large groups</dt><dd>Reserve ahead</dd></div></dl></aside></div><section id="services"><div class="head"><p class="eyebrow">Signatures</p><h2>Three dishes people order again</h2></div><div class="grid3"><div><h3>Nihari</h3><p>Beef shank simmered overnight, finished with ginger and fresh coriander.</p><span class="price">Rs. 1,450</span></div><div><h3>Chicken karahi</h3><p>Tomato, green chilli and black pepper, cooked in a heavy iron wok.</p><span class="price">Rs. 1,650</span></div><div><h3>Saffron kheer</h3><p>Rice pudding with cardamom, saffron and crushed pistachio.</p><span class="price">Rs. 450</span></div></div></section><section id="menu"><div class="head"><p class="eyebrow">Menu</p><h2>Tonight's menu</h2><p>Pick a section to see dishes and prices.</p></div><div class="tabs" id="tabs" role="tablist"></div><div class="menu" id="menu-list"></div></section><section id="book"><div class="book"><div class="head" style="margin:0"><p class="eyebrow">Reservations</p><h2>Reserve your table</h2><p>Choose a date, time and party size. We call to confirm.</p></div><form id="f" novalidate><div class="two"><label for="n">Name<input id="n" autocomplete="name"></label><label for="p">Phone<input id="p" type="tel" autocomplete="tel" placeholder="0300 1234567"></label></div><div class="two"><label for="date">Date<input id="date" type="date"></label><label for="time">Time<select id="time"><option>12:30</option><option>13:30</option><option>19:00</option><option>20:00</option><option>21:00</option><option>22:00</option></select></label></div><label for="x">Guests<select id="x"><option>1 guest</option><option>2 guests</option><option>3 guests</option><option>4 guests</option><option>5 guests</option><option>6 guests</option><option>7 to 10 guests</option></select></label><p class="err" id="err" role="alert"></p><button class="btn primary" type="submit">Reserve table</button><div class="ok" id="ok" hidden></div></form></div></section></main>
+<footer class="wrap"><span>© 2026 Saffron Table · Demo website</span><span>Built by <a href="index.html" target="_blank" rel="noopener">BytePulseDev</a></span></footer>
+
+<script>
+(function(){
+  var MENU=[{"cat": "Starters", "items": [["Seekh kebab", "Two skewers with mint chutney.", "Rs. 650"], ["Dahi bhalla", "Soft lentil dumplings, yogurt, tamarind.", "Rs. 400"], ["Chicken soup", "Light broth with pepper and lemon.", "Rs. 350"]]}, {"cat": "Mains", "items": [["Nihari", "Slow-cooked beef shank with ginger.", "Rs. 1,450"], ["Chicken karahi", "Tomato, green chilli, black pepper.", "Rs. 1,650"], ["Daal makhani", "Black lentils simmered with butter.", "Rs. 850"], ["Vegetable biryani", "Fragrant rice with seasonal vegetables.", "Rs. 900"]]}, {"cat": "Breads", "items": [["Tandoori naan", "Baked to order.", "Rs. 90"], ["Garlic naan", "Brushed with garlic butter.", "Rs. 140"], ["Roghni naan", "Sesame-topped, slightly sweet.", "Rs. 160"]]}, {"cat": "Desserts", "items": [["Saffron kheer", "Cardamom, saffron, pistachio.", "Rs. 450"], ["Gulab jamun", "Two warm syrup dumplings.", "Rs. 300"], ["Kulfi", "Slow-frozen milk with almonds.", "Rs. 380"]]}];
+  var tabs=document.getElementById('tabs'),list=document.getElementById('menu-list');
+  function show(i){
+    if(!tabs)return;
+    Array.prototype.forEach.call(tabs.children,function(b,j){b.setAttribute('aria-selected',j===i?'true':'false');});
+    list.innerHTML='';
+    MENU[i].items.forEach(function(it){
+      var d=document.createElement('div');d.className='item';
+      var h=document.createElement('h3');h.textContent=it[0];
+      var p=document.createElement('p');p.textContent=it[1];
+      var pr=document.createElement('span');pr.className='price';pr.textContent=it[2];
+      d.appendChild(h);d.appendChild(pr);d.appendChild(p);list.appendChild(d);
+    });
+  }
+  if(tabs&&MENU.length){
+    MENU.forEach(function(m,i){
+      var b=document.createElement('button');b.type='button';b.className='chip';b.setAttribute('role','tab');b.textContent=m.cat;
+      b.addEventListener('click',function(){show(i);});tabs.appendChild(b);
+    });
+    show(0);
+  }
+  var dt=document.getElementById('date');
+  try{var t=new Date();t.setMinutes(t.getMinutes()-t.getTimezoneOffset());dt.min=t.toISOString().slice(0,10);}catch(e){}
+  var f=document.getElementById('f'),err=document.getElementById('err'),ok=document.getElementById('ok');
+  f.addEventListener('submit',function(e){
+    e.preventDefault();ok.hidden=true;
+    var n=document.getElementById('n').value.trim(),p=document.getElementById('p').value.replace(/\D/g,''),d=dt.value;
+    if(!n){err.textContent='Please enter your name.';return;}
+    if(p.length<7){err.textContent='Please enter a phone number we can call.';return;}
+    if(!d){err.textContent='Please choose a date.';return;}
+    err.textContent='';
+    var tm=document.getElementById('time').value,x=document.getElementById('x').value;
+    ok.innerHTML='';
+    var b=document.createElement('b');b.textContent='Request noted. ';
+    ok.appendChild(b);
+    ok.appendChild(document.createTextNode('Thank you, '+n+'. '+x+' on '+d+' at '+tm+'. This is a demo form, so nothing was sent.'));
+    ok.hidden=false;f.reset();
+  });
+})();
+</script>
+</body>
+</html>
